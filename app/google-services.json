@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "979119905056",
+    "firebase_url": "https://diewithme-fa78c.firebaseio.com",
+    "project_id": "diewithme-fa78c",
+    "storage_bucket": "diewithme-fa78c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979119905056:android:894ed40d36d5e439",
+        "android_client_info": {
+          "package_name": "ru.macroid.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979119905056-o4q7uqs0tvl5nh9or6kgr84lnau23h9s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.macroid.chat",
+            "certificate_hash": "334ce559561c56311c8f8e89664d7bcc7eeb124b"
+          }
+        },
+        {
+          "client_id": "979119905056-s2hssm43vbieb9jdept1hr7o69t36v6e.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "979119905056-s2hssm43vbieb9jdept1hr7o69t36v6e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8G5jKmVkrJcbzzJdX6VKDHGR6wnQn8HU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979119905056-s2hssm43vbieb9jdept1hr7o69t36v6e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979119905056:android:59f3d6e36da54e7f",
+        "android_client_info": {
+          "package_name": "ru.macroid.diewithme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979119905056-h3sg83dgtuomrbn1p0c9ij8vf5ked5in.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.macroid.diewithme",
+            "certificate_hash": "334ce559561c56311c8f8e89664d7bcc7eeb124b"
+          }
+        },
+        {
+          "client_id": "979119905056-s2hssm43vbieb9jdept1hr7o69t36v6e.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "979119905056-s2hssm43vbieb9jdept1hr7o69t36v6e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8G5jKmVkrJcbzzJdX6VKDHGR6wnQn8HU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979119905056-s2hssm43vbieb9jdept1hr7o69t36v6e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

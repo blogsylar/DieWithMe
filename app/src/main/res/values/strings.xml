@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">DieWithMe</string>
+    <string name="send">Send</string>
+    <string name="input_text_hint">input text</string>
+    <string name="input_some_text">Input some text!</string>
+    <string name="to_long_message">To long message</string>
+    <string name="new_message_notification">New message!</string>
+    <string name="send_message_notification">send new message in chat</string>
+    <string name="push_to_read">Push to read</string>
+</resources>
