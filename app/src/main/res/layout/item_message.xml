@@ -1,45 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:layout_margin="10dp">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:padding="4dp">
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="@drawable/round_battery">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/messageItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:textColor="#ffffff"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="9"
+        android:layout_gravity="bottom"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/corner_left"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@drawable/rounded_corner">
+
+        <TextView
+            android:id="@+id/authorItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:textColor="#ffffff"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/authorItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/timeItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#ff00ff"/>
+                android:textColor="#ffffff" />
 
             <TextView
                 android:id="@+id/batteryItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#ff00ff"/>
-
-            <TextView
-                android:id="@+id/messageItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"/>
+                android:layout_gravity="right|bottom"
+                android:textColor="#999999"
+                android:paddingLeft="10dp"
+                android:textSize="11sp"/>
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
 
 </LinearLayout>

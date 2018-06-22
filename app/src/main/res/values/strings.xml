@@ -7,4 +7,12 @@
     <string name="new_message_notification">New message!</string>
     <string name="send_message_notification">send new message in chat</string>
     <string name="push_to_read">Push to read</string>
+    <string name="return_in_chat">Press to return in chat!</string>
+    <string name="notify_battery">Your battery is</string>
+    <string name="sorry_your_battery_level_over_15">Sorry! Your battery level over 15%</string>
+    <string name="you_sign_out">You have been signed out.</string>
+    <string name="welcome">Successfully signed in. Welcome!</string>
+    <string name="error_sign_in">We couldn\'t sign you in. Please try again later.</string>
+    <string name="welcome_sign">Welcome</string>
+    <string name="input_when_battery_over_15">Battery over 15%, sorry</string>
 </resources>

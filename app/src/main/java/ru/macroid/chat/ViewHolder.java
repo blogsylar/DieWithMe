@@ -2,6 +2,7 @@ package ru.macroid.chat;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -14,9 +15,8 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     TextView timeItem;
     TextView authorItem;
     TextView batteryItem;
+    LinearLayout itemLinear;
 
-    Calendar calendar;
-    SimpleDateFormat format;
     DataAdapter time;
 
     public ViewHolder(View itemView) {
@@ -26,6 +26,5 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         timeItem = itemView.findViewById(R.id.timeItem);
         messageItem = itemView.findViewById(R.id.messageItem);
         batteryItem = itemView.findViewById(R.id.batteryItem);
-
     }
 }

@@ -7,11 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -28,57 +31,75 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    /**
-     * MainActivityVariables
-     */
-
-    Button btsendMessage;
-    EditText etMessageInput;
-    RecyclerView messagesRecycler;
-
-    FirebaseDatabase database;
-    DatabaseReference myRef;
-
-    Calendar calendar;
-    SimpleDateFormat format;
-    String time;
-    String sendMessage;
-
-    ConstructorMessages constructorPushedMessage;
-    ConstructorMessages receivedMessagesFromFirebase;
-    ArrayList<ConstructorMessages> constructorMessages = new ArrayList<ConstructorMessages>();
-
-    int SIGN_IN_REQUEST_CODE = 1;
-
-    DataAdapter dataAdapter;
-    Iterator i;
-    String nameReceivedFromFirebase, messageReceiverFromFirebase, timeReceivedFromFirebase, batterReceivedFromFirebase;
-
-    public static int MAX_MESSAGE_LENGTH = 150;
-    String authors;
-
-    IntentFilter intentFilter;
-    Intent batteryStatus;
-    int battery;
-    String batteryLevel;
+    private ImageButton btsendMessage;
+    private EditText etMessageInput;
+    private TextView batteryInToolbar;
+    private RecyclerView messagesRecycler;
+    private Toolbar toolbar;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private Calendar calendar;
+    private SimpleDateFormat format;
+    private String time;
+    private String sendMessage;
+    private ConstructorMessages constructorPushedMessage;
+    private ConstructorMessages receivedMessagesFromFirebase;
+    private ArrayList<ConstructorMessages> constructorMessages;
+    private int SIGN_IN_REQUEST_CODE = 1;
+    private DataAdapter dataAdapter;
+    private Iterator i;
+    private String nameReceivedFromFirebase, messageReceiverFromFirebase, timeReceivedFromFirebase, batterReceivedFromFirebase;
+    private static int MAX_MESSAGE_LENGTH = 150;
+    private String authors;
+    private IntentFilter intentFilter;
+    private Intent batteryStatus;
+    private int battery;
+    private String batteryLevel;
+    private Timer timer;
+    private TimerTask timerTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        batteryStatus = registerReceiver(null, intentFilter);
-        battery = batteryStatus.getIntExtra("level", -1);
+        etMessageInput = (EditText) findViewById(R.id.etMessageInput);
+        batteryInToolbar = (TextView) findViewById(R.id.batteryInToolbar);
+        btsendMessage = (ImageButton) findViewById(R.id.btsendMessage);
+        btsendMessage.setOnClickListener(this);
+
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+                batteryStatus = registerReceiver(null, intentFilter);
+                battery = batteryStatus.getIntExtra("level", -1);
+
+                setBatteryInToolbar();
+
+                Log.d("happy", "" + battery);
+            }
+        };
+
+        timer.schedule(timerTask, 1000, 5000);
+
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+        setSupportActionBar(toolbar);
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
 
+        constructorMessages = new ArrayList<ConstructorMessages>();
+
         if(FirebaseAuth.getInstance().getCurrentUser() == null) {
-            // Start sign in/sign up activity
+
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
@@ -88,12 +109,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         } else {
 
-            Toast.makeText(this,"Welcome " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.welcome_sign) + FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),Toast.LENGTH_LONG).show();
         }
-
-        etMessageInput = (EditText) findViewById(R.id.etMessageInput);
-        btsendMessage = (Button) findViewById(R.id.btsendMessage);
-        btsendMessage.setOnClickListener(this);
 
         messagesRecycler = findViewById(R.id.messagesRecycler);
         messagesRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -102,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         messagesRecycler.setAdapter(dataAdapter);
 
         myRef.addChildEventListener(new ChildEventListener() {
+
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
@@ -118,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 constructorMessages.add(receivedMessagesFromFirebase);
                 dataAdapter.notifyDataSetChanged();
                 messagesRecycler.smoothScrollToPosition(constructorMessages.size());
+
             }
 
             @Override
@@ -142,6 +161,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    private void setBatteryInToolbar() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                batteryInToolbar.setText(battery + "%");
+            }
+        });
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -150,11 +180,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if(resultCode == RESULT_OK) {
 
-                Toast.makeText(this, "Successfully signed in. Welcome!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.welcome, Toast.LENGTH_LONG).show();
 
             } else {
 
-                Toast.makeText(this, "We couldn't sign you in. Please try again later.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.error_sign_in, Toast.LENGTH_LONG).show();
 
                 finish();
             }
@@ -168,7 +198,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 calendar = Calendar.getInstance();
                 format = new SimpleDateFormat("HH:mm");
-
                 time = format.format(calendar.getTime());
                 sendMessage = etMessageInput.getText().toString();
                 authors = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
@@ -183,6 +212,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     Toast.makeText(this, R.string.to_long_message, Toast.LENGTH_SHORT).show();
                     return;
+                } else if (battery > 15) {
+                    Toast.makeText(this, R.string.input_when_battery_over_15, Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
                 constructorPushedMessage = new ConstructorMessages(authors, sendMessage, time, batteryLevel);
@@ -194,8 +226,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 constructorPushedMessage.getTimes(),
                                 constructorPushedMessage.getBatteryLevel()
                         ));
-
-                //constructorMessages.add(constructorPushedMessage);
 
                 etMessageInput.setText("");
 
@@ -216,14 +246,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
 
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
 
-                            Toast.makeText(MainActivity.this,"You have been signed out.",Toast.LENGTH_LONG) .show();
-                            finish();
-                        }
-                    });
+                    Toast.makeText(MainActivity.this, R.string.you_sign_out,Toast.LENGTH_LONG) .show();
+                    finish();
+                }
+            });
         }
+
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        startService(new Intent(this, MyService.class));
+        System.runFinalization();
+        System.exit(0);
+        finish();
     }
 }

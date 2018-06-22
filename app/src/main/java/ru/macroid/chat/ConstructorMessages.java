@@ -11,6 +11,10 @@ public class ConstructorMessages {
     String time;
     String batteryLevel;
 
+    String sideMessage;
+
+
+
     public ConstructorMessages(String authors, String messages, String times, String batteryLevel) {
 
         this.authors = authors;
@@ -23,36 +27,25 @@ public class ConstructorMessages {
 
     }
 
+
+
     public String getAuthors() {
         return authors;
     }
 
-    public void setAuthors(String authors) {
-        this.authors = authors;
-    }
 
     public String getMessages() {
         return messages;
     }
 
-    public void setMessages(String messages) {
-        this.messages = messages;
-    }
 
     public String getTimes() {
         return times;
     }
 
-    public void setTimes(String times) {
-        this.times = time;
-    }
 
     public String getBatteryLevel() {
         return batteryLevel;
-    }
-
-    public void setBatteryLevel(String batteryLevel) {
-        this.batteryLevel = batteryLevel;
     }
 
 }
